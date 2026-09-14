@@ -48,15 +48,17 @@ BANK_HOLDER=
 
 ## Өгөгдлийн хадгалалт
 
-Локал: `data/hulan.sqlite`, WAL, transaction. Тестүүд тусдаа database ашиглана.
+Локалд `DATABASE_URL` хоосон үед `data/hulan.sqlite` ашиглана. PostgreSQL ашиглах бол `.env.local` дотор `DATABASE_URL=postgresql://postgres:<password>@localhost:5432/hulan_jewelry` гэж тохируулаад серверээ дахин асаана. Хүснэгт, жишиг материал анхны холболтоор үүснэ. Тестүүд тусдаа database ашиглана.
 
 Production: `DATABASE_URL`-д PostgreSQL connection string өгнө. `APP_ORIGIN`-д нийтэд харагдах HTTPS origin-оо төгсгөлийн `/`-гүй оруулна. `pg` driver нь connection string-ийн TLS тохиргоог ашигладаг; гэрчилгээний шалгалтыг кодоор унтраагаагүй.
+
+Локал `localhost` PostgreSQL нь Vercel deployment-д харагдахгүй. Vercel-д Neon зэрэг нийтэд холбогдох PostgreSQL баазын `DATABASE_URL`-ийг Project Settings → Environment Variables-д тусад нь тохируулна.
 
 Анхны холболтоор хүснэгт, индекс, туршилтын материалын каталог үүснэ. PostgreSQL advisory lock болон SQLite-ийн serialized transaction нь давхар төлбөр батлах, нөөцийн зэрэгцээ өөрчлөлтийг хамгаална. SQLite → PostgreSQL өгөгдөл автоматаар шилжихгүй; production эхлэхийн өмнө migration, backup/restore болон PostgreSQL дээр интеграцийн шалгалт хийнэ. Энэ орчинд PostgreSQL сервер байгаагүй тул PostgreSQL замыг бодит сервер дээр хараахан шалгаагүй.
 
 ## Дизайн ба хөдөлгөөн
 
-Native CSS layers, Grid, `clamp()`, `color-mix()`, `backdrop-filter`, sticky байрлал, hover / focus interaction, `animation-timeline: view()` ашиглав. Нүүр хуудасны шилжилтийн хэлбэр, бүтээгдэхүүний зураг, хэсгүүд доош гүйлгэхэд хоосон зайнаас тэлж гарч ирнэ. Scroll animation дэмжихгүй хөтөчид агуулга хэвийн харагдана. `prefers-reduced-motion` тохиргоотой үед хөдөлгөөн унтарна. Стандарт touch болон mouse wheel гүйлгэлт ажиллана. Доош сумыг дарахад цуглуулга руу зөөлөн гүйлгэнэ.
+Native CSS layers, Grid, `clamp()`, `color-mix()`, `backdrop-filter`, sticky байрлал, hover / focus interaction, `animation-timeline: view()` ашиглав. Нүүр хуудасны шилжилтийн хэлбэр, бүтээгдэхүүний зураг, хэсгүүд доош гүйлгэхэд хоосон зайнаас тэлж гарч ирнэ. Desktop дэлгэцэнд нэг wheel хөдөлгөөн нэг бүтэн хэсэг рүү шилжинэ; mobile болон намхан дэлгэцэнд урт агуулгыг алгасахгүйгээр энгийн гүйлгэлт, зөөлөн snap ажиллана. Scroll animation дэмжихгүй хөтөчид агуулга хэвийн харагдана. `prefers-reduced-motion` тохиргоотой үед хөдөлгөөн унтарна. Доош сумыг дарахад цуглуулга руу зөөлөн гүйлгэнэ.
 
 Чулууны дүрслэл нь кодоор үүсгэсэн загварчилсан SVG; бодит бүтээгдэхүүний зураг биш. Google Fonts сүлжээгүй үед системийн serif / sans-serif fallback ажиллана.
 
@@ -72,7 +74,7 @@ npm.cmd run build
 ```
 
 - 8 бизнесийн тест: үнэ, charms, хэмжээ, validation, зөв төлөв, зэрэгцээ давхар захиалга, давхар баталгаажуулалт, stock rollback.
-- 5 browser тест: DIY студиогийн шүүлтүүр/угсралт, mouse/touch drag, desktop/mobile navigation, charms-тай захиалга/админ урсгал, зөвшөөрөл ба cross-origin хамгаалалт.
+- 7 browser тест: нүүрийн scroll morph ба нэг wheel/нэг хэсгийн шилжилт, DIY студиогийн шүүлтүүр/угсралт, mouse/touch drag, desktop/mobile navigation, charms-тай захиалга/админ урсгал, зөвшөөрөл ба cross-origin хамгаалалт.
 - Browser screenshot-ууд `test-results/` дотор үүснэ.
 
 ## Дараагийн үе шат

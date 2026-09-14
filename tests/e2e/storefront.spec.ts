@@ -26,6 +26,35 @@ test("home elements emerge from empty space on scroll and respect reduced motion
   await expect(shape).toHaveCSS("animation-name", "none");
 });
 
+test("one desktop wheel gesture advances one home section while mobile keeps long sections scrollable", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+  await expect(page.locator("html")).toHaveAttribute("data-home-scroll-ready", "true");
+
+  await page.mouse.wheel(0, 120);
+  await page.mouse.wheel(0, 120);
+  for (let step = 0; step < 8; step++) {
+    await page.waitForTimeout(100);
+    await page.mouse.wheel(0, 40);
+  }
+  await expect.poll(async () =>
+    Math.round((await page.locator("#collection").boundingBox())!.y),
+  ).toBe(89);
+  expect((await page.locator("#how-it-works").boundingBox())!.y).toBeGreaterThan(800);
+
+  await page.waitForTimeout(750);
+  await page.mouse.wheel(0, 120);
+  await expect.poll(async () =>
+    Math.round((await page.locator("#how-it-works").boundingBox())!.y),
+  ).toBe(89);
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.reload();
+  const collectionTop = await page.locator("#collection").evaluate((node) => (node as HTMLElement).offsetTop);
+  await page.evaluate((top) => window.scrollTo({ top: top + 500, behavior: "instant" }), collectionTop);
+  expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(collectionTop + 300);
+});
+
 test("DIY starts empty and catalog filters can build a bracelet", async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 1440, height: 960 });
   await page.goto("/design");

@@ -8,13 +8,15 @@ import {
   Gem,
 } from "lucide-react";
 import { Bracelet, StoneOrb } from "@/components/bracelet";
+import { HomeSectionScroll } from "@/components/home-section-scroll";
 import { initialStones, presets, makePreset, money, LABOR_FEE } from "@/lib/catalog";
 import { getStones } from "@/lib/orders";
 export const dynamic = "force-dynamic";
 export default async function Home() {
   const stones = await getStones();
   return (
-    <main id="main">
+    <main id="main" className="home-page">
+      <HomeSectionScroll />
       <section className="hero section-shell">
         <div className="hero-copy">
           <h1>

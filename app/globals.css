@@ -3458,3 +3458,56 @@
     .designer-page .design-panel .panel-tabs button { font-size: 11px; }
   }
 }
+
+@layer base {
+  html:has(.home-page) {
+    scroll-snap-type: y proximity;
+    scroll-padding-top: 89px;
+  }
+}
+
+@layer components {
+  .home-page > section,
+  .home-page ~ .site-footer {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+}
+
+@media (min-width: 900px) and (min-height: 760px) {
+  @layer base {
+    html:has(.home-page) { scroll-snap-type: none; }
+  }
+  @layer components {
+    .home-page > section {
+      min-height: calc(100svh - 89px);
+    }
+    .home-page > .hero {
+      align-items: center;
+    }
+    .home-page > .collection-section,
+    .home-page > .stones-section {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .home-page > .how-section {
+      align-items: center;
+    }
+    .home-page > .closing-cta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+@layer responsive {
+  @media (max-width: 800px) {
+    html:has(.home-page) { scroll-padding-top: 76px; }
+  }
+  @media (max-width: 620px) {
+    html:has(.home-page) { scroll-padding-top: 73px; }
+  }
+}
