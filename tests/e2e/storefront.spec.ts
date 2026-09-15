@@ -30,6 +30,8 @@ test("one desktop wheel gesture advances one home section while mobile keeps lon
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");
   await expect(page.locator("html")).toHaveAttribute("data-home-scroll-ready", "true");
+  await expect(page.locator("html")).toHaveCSS("scrollbar-width", "none");
+  await expect(page.locator(".site-header")).toHaveCSS("backdrop-filter", "none");
 
   await page.mouse.wheel(0, 120);
   await page.mouse.wheel(0, 120);

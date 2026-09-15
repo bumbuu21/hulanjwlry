@@ -61,7 +61,10 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 100px;
-    scrollbar-color: #b4beb0 #f5f5ef;
+    scrollbar-width: none;
+  }
+  html::-webkit-scrollbar {
+    display: none;
   }
   body {
     background: var(--paper);
@@ -247,8 +250,7 @@
     justify-content: space-between;
     padding-inline: max(40px, calc((100vw - 1232px) / 2));
     border-bottom: 1px solid #e8e8df;
-    background: #faf9f6ed;
-    backdrop-filter: blur(18px);
+    background: #faf9f6fa;
   }
   .wordmark {
     font-family: var(--serif);
@@ -1933,14 +1935,10 @@
       from {
         opacity: 0;
         transform: translateY(44px) scale(0.94);
-        filter: blur(10px);
-        clip-path: inset(12% 8% round 45%);
       }
       to {
         opacity: 1;
         transform: translateY(0) scale(1);
-        filter: blur(0);
-        clip-path: inset(0 round 0);
       }
     }
   }
@@ -3306,6 +3304,7 @@
     border-radius: 50% 50% 28px 28px;
     background: linear-gradient(110deg, #e8ede3 5%, #f0e8e5 53%, #e9e8ef 100%);
     box-shadow: inset 0 1px 0 #ffffffaa, 0 12px 30px #8f9d8720;
+    transform-origin: center;
   }
   .home-morph-glow {
     position: absolute;
@@ -3332,22 +3331,26 @@
         animation: hero-sculpt linear both;
         animation-timeline: --hero-scroll;
         animation-range: exit 0% exit 100%;
+        will-change: transform, opacity;
       }
       .home-morph-shape {
         animation: morph-bridge linear both;
         animation-timeline: --home-bridge;
         animation-range: cover 15% cover 85%;
+        will-change: transform, opacity;
       }
       .home-morph-glow {
         animation: morph-glow linear both;
         animation-timeline: --home-bridge;
         animation-range: cover 15% cover 85%;
+        will-change: transform, opacity;
       }
       .home-morph + .collection-section .product-art,
       .story-art {
         animation: card-sculpt linear both;
         animation-timeline: --product-scroll;
         animation-range: entry 0% cover 32%;
+        will-change: transform, opacity;
       }
       .story-art { animation-timeline: --story-scroll; }
       .home-morph + .collection-section .product-meta {
@@ -3357,31 +3360,21 @@
       }
       @keyframes hero-sculpt {
         from {
-          border-radius: 48% 48% 4px 4px / 40% 40% 4px 4px;
           transform: translateY(0) scale(1) rotate(0);
-          filter: blur(0);
           opacity: 1;
         }
         to {
-          border-radius: 50%;
           transform: translateY(55px) scale(0.78) rotate(-6deg);
-          filter: blur(6px);
           opacity: 0.45;
         }
       }
       @keyframes morph-bridge {
         from {
-          width: 64px;
-          border-radius: 50%;
-          transform: scale(0) rotate(-24deg);
-          filter: blur(14px);
+          transform: scale(0.02, 0.18) rotate(-12deg);
           opacity: 0;
         }
         to {
-          width: min(1100px, calc(100% - 44px));
-          border-radius: 50% 50% 28px 28px;
           transform: scale(1) rotate(0);
-          filter: blur(0);
           opacity: 1;
         }
       }
@@ -3401,17 +3394,11 @@
       }
       @keyframes card-sculpt {
         from {
-          border-radius: 50%;
-          clip-path: inset(50% 50% round 50%);
           transform: translateY(44px) scale(0.6);
-          filter: blur(12px);
           opacity: 0;
         }
         to {
-          border-radius: 4px;
-          clip-path: inset(0 round 4px);
           transform: translateY(0) scale(1);
-          filter: blur(0);
           opacity: 1;
         }
       }

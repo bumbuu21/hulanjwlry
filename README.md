@@ -60,6 +60,8 @@ Production: `DATABASE_URL`-д PostgreSQL connection string өгнө. `APP_ORIGIN
 
 Native CSS layers, Grid, `clamp()`, `color-mix()`, `backdrop-filter`, sticky байрлал, hover / focus interaction, `animation-timeline: view()` ашиглав. Нүүр хуудасны шилжилтийн хэлбэр, бүтээгдэхүүний зураг, хэсгүүд доош гүйлгэхэд хоосон зайнаас тэлж гарч ирнэ. Desktop дэлгэцэнд нэг wheel хөдөлгөөн нэг бүтэн хэсэг рүү шилжинэ; mobile болон намхан дэлгэцэнд урт агуулгыг алгасахгүйгээр энгийн гүйлгэлт, зөөлөн snap ажиллана. Scroll animation дэмжихгүй хөтөчид агуулга хэвийн харагдана. `prefers-reduced-motion` тохиргоотой үед хөдөлгөөн унтарна. Доош сумыг дарахад цуглуулга руу зөөлөн гүйлгэнэ.
 
+Browser-ийн scrollbar-ыг харагдахгүй болгосон ч mouse, trackpad, touch болон keyboard гүйлгэлт хэвийн ажиллана. Scroll morph нь layout/blur animation ашиглахгүй, compositor-д хөнгөн `transform` ба `opacity`-гоор хөдөлнө.
+
 Чулууны дүрслэл нь кодоор үүсгэсэн загварчилсан SVG; бодит бүтээгдэхүүний зураг биш. Google Fonts сүлжээгүй үед системийн serif / sans-serif fallback ажиллана.
 
 SVG чулуу бүр олон үеийн radial gradient, чиглэсэн гэрлийн ойролт, ирмэгийн гялбаа, тусдаа зөөлөн сүүдэртэй. Дизайнерын эд ангийг хулгана эсвэл touch-оор нөгөө эд анги дээр чирэхэд хоёр байрлал солигдож, undo болон хадгалалтдаа тэр дараалал очно.
